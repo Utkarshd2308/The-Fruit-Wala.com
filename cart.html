@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Fruitwala - Cart Review</title>
+<style>
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f9fafb;
+        margin: 0;
+        padding: 0;
+        color: #333;
+    }
+    header {
+        background-color: #28a745;
+        color: white;
+        padding: 1rem 2rem;
+        text-align: center;
+    }
+    header h1 {
+        margin: 0;
+        font-family: cursive;
+    }
+    .container {
+        max-width: 900px;
+        margin: 2rem auto;
+        padding: 0 1rem;
+    }
+    h2 {
+        color: #28a745;
+        margin-bottom: 1.5rem;
+        text-align: center;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 3px 12px rgba(0,0,0,0.10);
+        overflow: hidden;
+    }
+    th, td {
+        padding: 16px;
+        border-bottom: 1px solid #eee;
+        text-align: center;
+    }
+    th {
+        background-color: #d2f0d2;
+        color: #28a745;
+    }
+    .product-info {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        min-width: 170px;
+    }
+    .product-info img {
+        width: 65px;
+        height: 65px;
+        object-fit: cover;
+        border-radius: 8px;
+    }
+    .qty-input {
+        width: 50px;
+        text-align: center;
+        font-size: 1rem;
+        padding: 4px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+    .remove-btn {
+        background: #e74c3c;
+        border: none;
+        color: white;
+        padding: 6px 10px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: bold;
+    }
+    .remove-btn:hover {
+        background: #c0392b;
+    }
+    .total {
+        font-weight: bold;
+        font-size: 1.1rem;
+        padding: 1rem 0;
+        text-align: right;
+    }
+    .checkout-btn {
+        background-color: #28a745;
+        color: white;
+        padding: 12px 22px;
+        border: none;
+        border-radius: 10px;
+        font-size: 1.1rem;
+        font-weight: 700;
+        cursor: pointer;
+        float: right;
+        margin-top: 10px;
+    }
+    .checkout-btn:hover {
+        background-color: #1c6c1c;
+    }
+    @media(max-width: 600px){
+        .product-info {
+            flex-direction: column;
+        }
+        .qty-input {
+            width: 100%;
+        }
+        th, td {
+            padding: 10px 5px;
+            font-size: 0.95rem;
+        }
+    }
+    .continue-shopping {
+        display: inline-block;
+        margin-top: 1rem;
+        color: #28a745;
+        font-weight: bold;
+        text-decoration: none;
+        border: 1px solid #28a745;
+        padding: 8px 16px;
+        border-radius: 8px;
+        transition: background 0.3s;
+    }
+    .continue-shopping:hover {
+        background: #28a745;
+        color: white;
+    }
+</style>
+</head>
+<body>
+<header>
+  <h1>Fruitwala Cart Review</h1>
+</header>
+<div class="container">
+    <h2>Your Selected Fruits</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Fruit</th>
+                <th>Price/kg</th>
+                <th>Qty (kg)</th>
+                <th>Subtotal</th>
+                <th>Remove</th>
+            </tr>
+        </thead>
+        <tbody id="cart-body"></tbody>
+    </table>
+    <div class="total" id="cart-total">Total: ₹0.00</div>
+    <button class="checkout-btn" onclick="checkout()">Proceed to Checkout</button>
+    <br>
+    <a href="home page.html" class="continue-shopping">← Continue Shopping</a>
+</div>
+</body>
+</html>
