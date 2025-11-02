@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Fruitwala - Order Receipt</title>
+<style>
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: #f9fafb;
+        margin: 0;
+        padding: 0;
+        color: #333;
+        overflow-x: hidden;
+    }
+   header{
+    background-color: #28a745;
+    color: white;
+    width: 100%;
+    padding: 1rem 2rem;
+    text-align: center;
+}
+header h1{
+    font-family: cursive;
+}
+footer {
+    bottom: auto;    
+    width: 100%;
+    background-color: #1b381b;
+    color: white;
+    padding: 2rem 1rem;
+    text-align: center;
+    font-size: 0.9rem;
+}
+    .receipt {
+        max-width: 600px;
+        margin: auto;
+        background: white;
+        padding: 2rem;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 1rem;
+    }
+    th, td {
+        border-bottom: 1px solid #eee;
+        padding: 12px;
+        text-align: left;
+    }
+    th {
+        background-color: #d2f0d2;
+        color: #28a745;
+    }
+    .total-row td {
+        font-weight: bold;
+        font-size: 1.1rem;
+        text-align: right;
+    }
+    .print-btn {
+        margin-top: 20px;
+        display: block;
+        width: 100%;
+        padding: 12px;
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: white;
+        background-color: #28a745;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        text-align: center;
+    }
+    .print-btn:hover {
+        background-color: #1c6c1c;
+    }
+     .back-btn {
+    background-color: #28a745;
+    color: white;
+    padding: 10px 22px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.back-btn:hover {
+    background-color: #1c6c1c;
+}
+   .next-btn {
+    display: inline-block;
+    background-color: #28a745;
+    color: white;
+    padding: 12px 28px;
+    text-decoration: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.next-btn:hover {
+    background-color: #1c6c1c;
+}
+</style>
+</head>
+<body>
+<header>
+  <h1>TheFruitwala Cart Review</h1>
+</header>
+<br>
+<div class="receipt">
+    <h1>TheFruitwala Order Receipt</h1>
+    <table id="receipt-table">
+        <thead>
+            <tr>
+                <th>Fruit</th>
+                <th>Price (₹/kg)</th>
+                <th>Quantity (kg)</th>
+                <th>Subtotal (₹)</th>
+            </tr>
+        </thead>
+        <tbody id="receipt-body"></tbody>
+        <tfoot>
+            <tr class="total-row">
+                <td colspan="3">Total</td>
+                <td id="receipt-total">₹0.00</td>
+            </tr>
+        </tfoot>
+    </table>
+    <button class="print-btn" onclick="window.print()">Print Receipt</button>
+    <br>
+    
+     
+    <div style="text-align:center; margin-top:20px;">
+          <button onclick="goBack()" class="back-btn">Back</button>
+  <a href="confirmation.html" class="next-btn">Next</a>
+</div>
+</div>
+<br>
+<footer id="contact">
+  <p>Contact us: support@fruitwala.com | Follow us on social media</p>
+  <p>&copy; 2025 Fruitwala. All rights reserved.</p>
+</footer>
+<script>
+const lastOrder = JSON.parse(localStorage.getItem('fruitwalaLastOrder')) || [];
+const receiptBody = document.getElementById('receipt-body');
+let total = 0;
+
+if(lastOrder.length === 0) {
+    receiptBody.innerHTML = "<tr><td colspan='4'>No recent order found.</td></tr>";
+} else {
+    lastOrder.forEach(item => {
+        let subtotal = item.price * item.quantity;
+        total += subtotal;
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td>${item.name}</td>
+            <td>₹${item.price.toFixed(2)}</td>
+            <td>${item.quantity}</td>
+            <td>₹${subtotal.toFixed(2)}</td>
+        `;
+        receiptBody.appendChild(tr);
+    });
+    document.getElementById('receipt-total').innerText = `₹${total.toFixed(2)}`;
+}
+ function goBack(){
+    window.history.back();
+   }
+</script>
+</body>
+</html>
