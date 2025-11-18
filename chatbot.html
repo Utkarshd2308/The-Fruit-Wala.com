@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<style>
+  /* Chatbot container styles */
+  #chatbot {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 320px;
+    max-height: 400px;
+    background: white;
+    border: 1px solid #28a745;
+    border-radius: 10px;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+  }
+
+  #chatbot-header {
+    background-color: #28a745;
+    color: white;
+    padding: 12px;
+    font-weight: bold;
+    border-radius: 10px 10px 0 0;
+    text-align: center;
+  }
+
+  #chatbot-messages {
+    flex: 1;
+    padding: 10px;
+    overflow-y: auto;
+  }
+
+  .message {
+    margin-bottom: 10px;
+    clear: both;
+  }
+
+  .user-message {
+    background: #dcf8c6;
+    padding: 8px 12px;
+    border-radius: 15px 15px 0 15px;
+    float: right;
+    max-width: 70%;
+  }
+
+  .bot-message {
+    background: #f1f0f0;
+    padding: 8px 12px;
+    border-radius: 15px 15px 15px 0;
+    float: left;
+    max-width: 70%;
+  }
+
+  #chatbot-input-area {
+    border-top: 1px solid #ccc;
+    padding: 8px;
+    display: flex;
+  }
+
+  #chatbot-input {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid #28a745;
+    border-radius: 5px;
+    font-size: 14px;
+  }
+
+  #chatbot-send-btn {
+    background-color: #28a745;
+    border: none;
+    color: white;
+    padding: 8px 12px;
+    margin-left: 8px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  #chatbot-send-btn:hover {
+    background-color: #1e7e34;
+  }
+</style>
+
+<div id="chatbot">
+  <div id="chatbot-header">Fruitwala Chatbot</div>
+  <div id="chatbot-messages"></div>
+  <div id="chatbot-input-area">
+    <input type="text" id="chatbot-input" placeholder="Type your message..." />
+    <button id="chatbot-send-btn">Send</button>
+  </div>
+</div>
+
+<script>
+  const messagesContainer = document.getElementById('chatbot-messages');
+  const input = document.getElementById('chatbot-input');
+  const sendBtn = document.getElementById('chatbot-send-btn');
+
+  // Sample basic bot responses
+  const botResponses = {
+    "hi": "Hello! How can I help you today?",
+    "hello": "Hi there! What can I assist you with?",
+    "what products do you have": "We offer fresh fruits like Mangoes, Apples, Bananas, and many more. What are you looking for?",
+    "order": "To place an order, please visit the checkout page or tell me what you want!",
+    "thanks": "You're welcome! Feel free to ask anything else."
+  };
+
+  function addMessage(text, sender) {
+    const msgDiv = document.createElement('div');
+    msgDiv.classList.add('message');
+    if(sender === 'user') {
+      msgDiv.classList.add('user-message');
+    } else {
+      msgDiv.classList.add('bot-message');
+    }
+    msgDiv.textContent = text;
+    messagesContainer.appendChild(msgDiv);
+    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+  }
+
+  function getBotResponse(message) {
+    message = message.toLowerCase();
+    for (const key in botResponses) {
+      if(message.includes(key)) {
+        return botResponses[key];
+      }
+    }
+    return "Sorry, I didn't understand that. Can you please rephrase?";
+  }
+
+  sendBtn.addEventListener('click', () => {
+    const userMessage = input.value.trim();
+    if(userMessage === "") return;
+
+    addMessage(userMessage, 'user');
+    input.value = '';
+
+    setTimeout(() => {
+      const botReply = getBotResponse(userMessage);
+      addMessage(botReply, 'bot');
+    }, 600);
+  });
+
+  input.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      sendBtn.click();
+    }
+  });
+</script>
+</head>
