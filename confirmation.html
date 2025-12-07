@@ -5,87 +5,306 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Fruitwala - Order Confirmed</title>
 <style>
-    body {
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-         background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-        margin: 0;
-        padding: 0;
-        color: #333;
-    }
-    header {
-        background-color: #28a745;
-        color: white;
-        padding: 1rem 2rem;
-        text-align: center;
-    }
-    header h1 {
-        margin: 0;
-        font-family: cursive;
-    }
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 50%, #d1ecf1 100%);
+    line-height: 1.6;
+    color: #333;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+}
+
+header {
+    background: linear-gradient(135deg, #28a745, #20c997);
+    color: white;
+    padding: 1.5rem 1rem;
+    box-shadow: 0 4px 20px rgba(40, 167, 69, 0.3);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+header h1 {
+    font-family: cursive;
+    font-size: clamp(1.4rem, 5vw, 2.2rem);
+    margin: 0;
+    text-align: center;
+}
+
+.container {
+    flex: 1;
+    max-width: 650px;
+    margin: 2rem auto;
+    padding: 3rem 2rem;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    border-radius: 24px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+    text-align: center;
+    position: relative;
+    animation: bounceIn 0.8s ease-out;
+}
+
+@keyframes bounceIn {
+    0% { opacity: 0; transform: scale(0.7) translateY(50px); }
+    60% { opacity: 1; transform: scale(1.05); }
+    100% { transform: scale(1) translateY(0); }
+}
+
+.success-icon {
+    font-size: clamp(4rem, 12vw, 6rem);
+    background: linear-gradient(135deg, #28a745, #20c997);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 1.5rem;
+    animation: bounce 1s ease-in-out infinite;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+.container h2 {
+    color: #28a745;
+    font-size: clamp(1.8rem, 6vw, 2.8rem);
+    font-weight: 800;
+    margin-bottom: 1rem;
+    background: linear-gradient(135deg, #28a745, #20c997);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.message {
+    font-size: clamp(1rem, 3.5vw, 1.2rem);
+    color: #495057;
+    margin: 2rem 0;
+    line-height: 1.7;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.message strong {
+    color: #28a745;
+    font-weight: 700;
+}
+
+.order-details {
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    border-radius: 16px;
+    padding: 1.5rem;
+    margin: 2rem 0;
+    border: 2px dashed #28a745;
+}
+
+.order-details h3 {
+    color: #28a745;
+    margin-bottom: 1rem;
+    font-size: 1.3rem;
+}
+
+.detail-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.8rem;
+    font-size: 1rem;
+}
+
+.detail-value {
+    font-weight: 600;
+    color: #28a745;
+}
+
+.btn-home {
+    display: inline-block;
+    background: linear-gradient(135deg, #28a745, #20c997);
+    color: white;
+    font-weight: 700;
+    font-size: clamp(1rem, 4vw, 1.2rem);
+    text-decoration: none;
+    border-radius: 50px;
+    padding: 18px 40px;
+    box-shadow: 0 10px 30px rgba(40, 167, 69, 0.4);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-home:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 15px 40px rgba(40, 167, 69, 0.5);
+    background: linear-gradient(135deg, #20c997, #28a745);
+}
+
+.btn-home:active {
+    transform: translateY(-2px);
+}
+
+footer {
+    background: linear-gradient(135deg, #1b381b, #155724);
+    color: white;
+    padding: 2.5rem 1rem 2rem;
+    text-align: center;
+    font-size: 0.95rem;
+    margin-top: auto;
+    flex-shrink: 0;
+}
+
+footer a {
+    color: #c3e6cb;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+footer a:hover {
+    color: white;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
     .container {
-        max-width: 550px;
-        margin: 4rem auto;
-        padding: 2rem;
-        background: white;
-        border-radius: 16px;
-        box-shadow: 0 3px 14px rgba(0,0,0,0.10);
-        text-align: center;
-    }
-    .icon {
-        font-size: 5rem;
-        color: #28a745;
-        margin-bottom: 18px;
-    }
-    h2 {
-        color: #28a745;
-        margin-bottom: 0.5rem;
-    }
-    .info {
-        font-size: 1.05rem;
-        margin: 1.1rem 0 2rem 0;
-        color: #444;
-    }
-    .btn-home {
-        display: inline-block;
-        background: #28a745;
-        color: white;
-        font-weight: bold;
-        font-size: 1rem;
-        text-decoration: none;
-        border-radius: 8px;
-        padding: 12px 26px;
-        transition: background 0.2s;
-    }
-    .btn-home:hover {
-        background: #146c3a;
+        margin: 1rem;
+        padding: 2rem 1.5rem;
+        border-radius: 20px;
     }
     
-      footer {
-    background-color: #1b381b;
-    color: white;
-    padding: 2rem 1rem;
-    text-align: center;
-    font-size: 0.9rem;
-  }
+    .detail-row {
+        flex-direction: column;
+        gap: 0.5rem;
+        text-align: left;
+    }
+    
+    .detail-value {
+        font-size: 1.1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    header {
+        padding: 1.2rem 1rem;
+    }
+    
+    .container {
+        padding: 1.5rem 1rem;
+    }
+    
+    .message {
+        font-size: 1rem;
+    }
+}
+
+/* Scroll Indicator */
+.container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #28a745, #20c997, #28a745);
+    border-radius: 24px 24px 0 0;
+    animation: progress 3s ease-in-out;
+}
+
+@keyframes progress {
+    0% { width: 0%; }
+    100% { width: 100%; }
+}
 </style>
 </head>
 <body>
-    <header>
-  <h1>TheFruitwala Cart Review</h1>
+<header>
+    <h1>🍎 TheFruitwala</h1>
 </header>
+
 <div class="container">
-    <div class="icon">&#10003;</div>
-    <h2>Thank You for Your Order!</h2>
-    <div class="info">
-        Your order has been successfully placed. <br>
-        We will deliver your fresh fruits soon.<br>
-        For any help, please contact our support team.<br>
+    <div class="success-icon">✅</div>
+    
+    <h2>Order Confirmed!</h2>
+    
+    <div class="message">
+        Your order has been successfully placed! <strong>Fresh fruits</strong> are being prepared for delivery.
+        <br><br>
+        We'll notify you once your order is on the way 🚚
     </div>
-    <a href="index.html" class="btn-home">Continue Shopping</a>
+    
+    <div class="order-details">
+        <h3>📋 Order Summary</h3>
+        <div class="detail-row">
+            <span>Order ID:</span>
+            <span class="detail-value" id="order-id">FRT-001</span>
+        </div>
+        <div class="detail-row">
+            <span>Status:</span>
+            <span class="detail-value">✅ Confirmed</span>
+        </div>
+        <div class="detail-row">
+            <span>Delivery:</span>
+            <span class="detail-value">Within 2 hours</span>
+        </div>
+    </div>
+    
+    <a href="index.html" class="btn-home">
+        🛒 Continue Shopping
+    </a>
 </div>
+
 <footer id="contact">
-  <p>Contact us: support@fruitwala.com | Follow us on social media</p>
-  <p>&copy; 2025 Fruitwala. All rights reserved.</p>
+    <p>Contact us: <a href="mailto:support@fruitwala.com">support@fruitwala.com</a> | Follow us on social media</p>
+    <p>&copy; 2025 Fruitwala. All rights reserved.</p>
 </footer>
+
+<script>
+    // Dynamic Order ID
+    document.getElementById('order-id').textContent = 'FRT-' + Math.floor(Math.random() * 1000).toString().padStart(3, '0');
+    
+    // Clear cart after successful order
+    localStorage.removeItem('fruitwalaCart');
+    
+    // Confetti effect (optional)
+    function createConfetti() {
+        for(let i = 0; i < 50; i++) {
+            setTimeout(() => {
+                const confetti = document.createElement('div');
+                confetti.style.position = 'fixed';
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.top = '-10px';
+                confetti.style.width = '10px';
+                confetti.style.height = '10px';
+                confetti.style.background = `hsl(${Math.random() * 60 + 100}, 70%, 60%)`;
+                confetti.style.borderRadius = '50%';
+                confetti.style.pointerEvents = 'none';
+                confetti.style.zIndex = '9999';
+                confetti.style.animation = 'fall 3s linear forwards';
+                document.body.appendChild(confetti);
+                
+                setTimeout(() => confetti.remove(), 3000);
+            }, i * 50);
+        }
+    }
+    
+    // Add CSS for confetti
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes fall {
+            to { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+        }
+    `;
+    document.head.appendChild(style);
+    
+    // Trigger confetti after 1 second
+    setTimeout(createConfetti, 1000);
+</script>
 </body>
 </html>
