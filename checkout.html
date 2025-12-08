@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Fruitwala - Checkout</title>
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 50%, #d1ecf1 100%);
+    color: #333;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+header {
+    background: linear-gradient(135deg, #28a745, #20c997);
+    color: white;
+    padding: 1.5rem 1rem;
+    text-align: center;
+    box-shadow: 0 4px 20px rgba(40,167,69,0.3);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+header h1 {
+    margin: 0;
+    font-family: cursive;
+    font-size: clamp(1.4rem, 5vw, 2.2rem);
+}
+
+.container {
+    flex: 1;
+    max-width: 720px;
+    margin: 2rem auto;
+    padding: 2.5rem 2rem;
+    background: rgba(255,255,255,0.95);
+    backdrop-filter: blur(20px);
+    border-radius: 24px;
+    box-shadow: 0 15px 50px rgba(0,0,0,0.12);
+    animation: slideUp 0.6s ease-out;
+}
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.container h2 {
+    color: #28a745;
+    margin-bottom: 2rem;
+    text-align: center;
+    font-size: clamp(1.6rem, 5vw, 2.2rem);
+    font-weight: 700;
+}
+
+form label {
+    font-weight: 600;
+    display: block;
+    margin: 1.2rem 0 0.4rem 0;
+    color: #495057;
+    font-size: 0.95rem;
+}
+
+form input, form textarea {
+    width: 100%;
+    padding: 14px 16px;
+    border-radius: 12px;
+    border: 2px solid #e9ecef;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background: #fafbfc;
+}
+
+form input:focus, form textarea:focus {
+    outline: none;
+    border-color: #28a745;
+    box-shadow: 0 0 0 4px rgba(40,167,69,0.1);
+    background: white;
+    transform: translateY(-1px);
+}
+
+textarea {
+    min-height: 100px;
+    resize: vertical;
+    font-family: inherit;
+}
+
+.order-summary {
+    margin: 2.5rem 0;
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    border-radius: 16px;
+    padding: 1.8rem;
+    border: 2px solid #e9ecef;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+}
+
+.order-summary h3 {
+    color: #28a745;
+    margin-bottom: 1.2rem;
+    font-size: 1.3rem;
+    font-weight: 700;
+}
+
+.order-summary ul {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 1.5rem;
+}
+
+.order-summary li {
+    padding: 12px 0;
+    border-bottom: 1px solid #dee2e6;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1rem;
+}
+
+.order-summary li:last-child {
+    border-bottom: none;
+}
+
+.order-total {
+    text-align: right;
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: #28a745;
+    background: white;
+    padding: 1rem;
+    border-radius: 12px;
+    margin-top: 1rem;
+    box-shadow: 0 4px 15px rgba(40,167,69,0.15);
+}
+
+.buttons-row {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2.5rem;
+    flex-wrap: wrap;
+}
+
+.back-btn, .submit-btn {
+    flex: 1;
+    min-width: 150px;
+    padding: 16px 24px;
+    border: none;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+.submit-btn {
+    background: linear-gradient(135deg, #28a745, #20c997);
+    color: white;
+    box-shadow: 0 6px 20px rgba(40,167,69,0.3);
+}
+
+.submit-btn:hover:not(:disabled) {
+    background: linear-gradient(135deg, #20c997, #28a745);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(40,167,69,0.4);
+}
+
+.submit-btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.back-btn {
+    background: linear-gradient(135deg, #6c757d, #495057);
+    color: white;
+}
+
+.back-btn:hover {
+    background: linear-gradient(135deg, #495057, #6c757d);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(108,117,125,0.3);
+}
+
+footer {
+    background: linear-gradient(135deg, #1b381b, #155724);
+    color: white;
+    padding: 2.5rem 1rem 2rem;
+    text-align: center;
+    font-size: 0.95rem;
+    margin-top: auto;
+}
+
+footer a {
+    color: #c3e6cb;
+    text-decoration: none;
+}
+
+footer a:hover {
+    color: white;
+}
+
+@media (max-width: 768px) {
+    .container {
+        margin: 1rem;
+        padding: 2rem 1.5rem;
+        border-radius: 20px;
+    }
+    
+    .buttons-row {
+        flex-direction: column;
+    }
+    
+    .order-summary li {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    header {
+        padding: 1.2rem 1rem;
+    }
+    
+    form label {
+        font-size: 0.9rem;
+    }
+    
+    .order-summary {
+        padding: 1.2rem;
+    }
+}
+
+.empty-cart {
+    text-align: center;
+    padding: 3rem;
+    color: #6c757d;
+}
+
+.empty-cart h3 {
+    color: #28a745;
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+}
+</style>
+</head>
+<body>
+<header>
+    <h1>🛒 TheFruitwala Checkout</h1>
+</header>
+
+<div class="container">
+    <h2>📍 Delivery Details</h2>
+    
+    <form id="checkout-form" onsubmit="return placeOrder()">
+        <label for="name">👤 Full Name *</label>
+        <input type="text" id="name" name="name" required />
+        
+        <label for="mobile">📱 Mobile Number *</label>
+        <input type="tel" id="mobile" name="mobile" required pattern="[0-9]{10}" maxlength="10" placeholder="10 digit number" />
+        
+        <label for="address">📍 Delivery Address *</label>
+        <textarea id="address" name="address" required placeholder="Enter your complete address"></textarea>
+        
+        <div class="order-summary" id="order-summary">
+        </div>
+        
+        <div class="buttons-row">
+            <a href="cart.html"><button type="button" onclick="goBack()" class="back-btn">← Back to Cart</button></a>
+            <button type="submit" class="submit-btn" id="place-order-btn">✅ Place Order</button>
+        </div>
+    </form>
+</div>
+
+<footer id="contact">
+    <p>Contact us: <a href="mailto:support@fruitwala.com">support@fruitwala.com</a> | Follow us on social media</p>
+    <p>&copy; 2025 Fruitwala. All rights reserved.</p>
+</footer>
+
+<script>
+const cart = JSON.parse(localStorage.getItem('fruitwalaCart')) || [];
+const orderSummary = document.getElementById('order-summary');
+const placeOrderBtn = document.getElementById('place-order-btn');
+
+function renderOrderSummary() {
+    if (cart.length === 0) {
+        orderSummary.innerHTML = `
+            <div class="empty-cart">
+                <h3>🛒 Your cart is empty</h3>
+                <p>Add some fresh fruits to your cart first!</p>
+                <button type="button" onclick="goBack()" class="back-btn" style="margin-top: 1rem;">← Continue Shopping</button>
+            </div>
+        `;
+        placeOrderBtn.disabled = true;
+        placeOrderBtn.textContent = 'Cart Empty';
+        return;
+    }
+    
+    let total = 0;
+    let orderList = '<h3>🛒 Your Order Summary</h3><ul>';
+    
+    cart.forEach(item => {
+        const subtotal = item.price * item.quantity;
+        total += subtotal;
+        orderList += `
+            <li>
+                <span>${item.name}</span>
+                <span style="font-weight: 600; color: #28a745;">${item.quantity}kg - ₹${subtotal.toFixed(2)}</span>
+            </li>
+        `;
+    });
+    
+    orderList += '</ul>';
+    orderList += `<div class="order-total">Total: ₹${total.toFixed(2)}</div>`;
+    
+    orderSummary.innerHTML = orderList;
+    placeOrderBtn.disabled = false;
+    placeOrderBtn.textContent = `✅ Place Order (₹${total.toFixed(2)})`;
+}
+
+function goBack() {
+    window.history.back();
+}
+
+function placeOrder() {
+    const name = document.getElementById('name').value;
+    const mobile = document.getElementById('mobile').value;
+    const address = document.getElementById('address').value;
+    
+    if (!name || !mobile || !address) {
+        alert('Please fill all fields');
+        return false;
+    }
+    
+    if (!/^\d{10}$/.test(mobile)) {
+        alert('Please enter valid 10-digit mobile number');
+        return false;
+    }
+    
+    const orderData = {
+        cart: cart,
+        customer: { name, mobile, address },
+        timestamp: new Date().toISOString()
+    };
+    
+    localStorage.setItem('fruitwalaLastOrder', JSON.stringify(orderData.cart));
+    localStorage.removeItem('fruitwalaCart');
+    
+    window.location.href = 'receipt.html';
+    return false;
+}
+
+document.addEventListener('DOMContentLoaded', renderOrderSummary);
+</script>
+</body>
+</html>
