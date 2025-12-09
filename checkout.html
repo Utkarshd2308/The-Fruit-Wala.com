@@ -208,6 +208,45 @@ footer a:hover {
     color: white;
 }
 
+.success-message {
+    display: none;
+    background: linear-gradient(135deg, #d4edda, #c3e6cb);
+    border: 2px solid #28a745;
+    border-radius: 16px;
+    padding: 2rem;
+    text-align: center;
+    margin: 2rem 0;
+    animation: bounceIn 0.6s ease-out;
+}
+
+.success-message.show {
+    display: block;
+}
+
+@keyframes bounceIn {
+    0% { opacity: 0; transform: scale(0.8) translateY(20px); }
+    60% { opacity: 1; transform: scale(1.05); }
+    100% { transform: scale(1) translateY(0); }
+}
+
+.success-icon {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+}
+
+.success-title {
+    color: #28a745;
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.success-text {
+    color: #155724;
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+}
+
 @media (max-width: 768px) {
     .container {
         margin: 1rem;
@@ -274,7 +313,14 @@ footer a:hover {
         <div class="order-summary" id="order-summary">
         </div>
         
-        <div class="buttons-row">
+        <div id="success-message" class="success-message">
+            <div class="success-icon">✅</div>
+            <div class="success-title">Order Placed Successfully!</div>
+            <div class="success-text">📱 Order details sent to owner. We will contact you soon!</div>
+            <button type="button" onclick="goToHome()" class="submit-btn" style="width: 100%; margin-top: 1rem;">🏠 Continue Shopping</button>
+        </div>
+        
+        <div class="buttons-row" id="buttons-row">
             <a href="cart.html"><button type="button" onclick="goBack()" class="back-btn">← Back to Cart</button></a>
             <button type="submit" class="submit-btn" id="place-order-btn">✅ Place Order</button>
         </div>
@@ -290,6 +336,10 @@ footer a:hover {
 const cart = JSON.parse(localStorage.getItem('fruitwalaCart')) || [];
 const orderSummary = document.getElementById('order-summary');
 const placeOrderBtn = document.getElementById('place-order-btn');
+const buttonsRow = document.getElementById('buttons-row');
+const successMessage = document.getElementById('success-message');
+
+const OWNER_MOBILE = "8087724038"; // 
 
 function renderOrderSummary() {
     if (cart.length === 0) {
@@ -331,20 +381,59 @@ function goBack() {
     window.history.back();
 }
 
+function goToHome() {
+    window.location.href = 'index.html'; 
+}
+
+function sendWhatsAppMessage(name, mobile, address, orderDetails, total) {
+    const message = `🔥 *NEW ORDER RECEIVED* 🔥%0A%0A` +
+        `👤 *Customer:* ${name}%0A` +
+        `📱 *Mobile:* ${mobile}%0A` +
+        `📍 *Address:* ${address}%0A%0A` +
+        `🛒 *Order Details:*%0A` +
+        `${orderDetails}%0A%0A` +
+        `💰 *Total Amount:* ₹${total}%0A` +
+        `⏰ *Time:* ${new Date().toLocaleString('en-IN')}%0A%0A` +
+        `✅ Please process this order!`;
+    
+    const whatsappUrl = `https://wa.me/${8087724038}?text=${message}`;
+    
+    const link = document.createElement('a');
+    link.href = whatsappUrl;
+    link.target = '_blank';
+    link.rel = 'noopener noreferrer';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
+
 function placeOrder() {
     const name = document.getElementById('name').value;
     const mobile = document.getElementById('mobile').value;
     const address = document.getElementById('address').value;
     
     if (!name || !mobile || !address) {
-        alert('Please fill all fields');
+        alert('❌ Please fill all fields');
         return false;
     }
     
     if (!/^\d{10}$/.test(mobile)) {
-        alert('Please enter valid 10-digit mobile number');
+        alert('❌ Please enter valid 10-digit mobile number');
         return false;
     }
+    
+    buttonsRow.style.display = 'none';
+    
+    let orderDetails = '';
+    let total = 0;
+    
+    cart.forEach(item => {
+        const subtotal = item.price * item.quantity;
+        total += subtotal;
+        orderDetails += `• ${item.name} (${item.quantity}kg) - ₹${subtotal}\n`;
+    });
+
+    sendWhatsAppMessage(name, mobile, address, orderDetails, total.toFixed(2));
     
     const orderData = {
         cart: cart,
@@ -352,10 +441,11 @@ function placeOrder() {
         timestamp: new Date().toISOString()
     };
     
-    localStorage.setItem('fruitwalaLastOrder', JSON.stringify(orderData.cart));
+    localStorage.setItem('fruitwalaLastOrder', JSON.stringify(orderData));
     localStorage.removeItem('fruitwalaCart');
     
-    window.location.href = 'receipt.html';
+    successMessage.classList.add('show');
+    
     return false;
 }
 
