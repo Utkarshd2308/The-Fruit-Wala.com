@@ -339,7 +339,7 @@ const placeOrderBtn = document.getElementById('place-order-btn');
 const buttonsRow = document.getElementById('buttons-row');
 const successMessage = document.getElementById('success-message');
 
-const OWNER_MOBILE = "8087724038"; // 
+const OWNER_MOBILE = "+918087724038"; // 
 
 function renderOrderSummary() {
     if (cart.length === 0) {
@@ -396,7 +396,7 @@ function sendWhatsAppMessage(name, mobile, address, orderDetails, total) {
         `⏰ *Time:* ${new Date().toLocaleString('en-IN')}%0A%0A` +
         `✅ Please process this order!`;
     
-    const whatsappUrl = `https://wa.me/${8087724038}?text=${message}`;
+    const whatsappUrl = `https://wa.me/${+918087724038}?text=${message}`;
     
     const link = document.createElement('a');
     link.href = whatsappUrl;
@@ -453,3 +453,4 @@ document.addEventListener('DOMContentLoaded', renderOrderSummary);
 </script>
 </body>
 </html>
+
